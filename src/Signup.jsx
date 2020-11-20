@@ -15,7 +15,6 @@ function Signup(props) {
 const axiosCall = () => {
 const method = 'post';
 const url = 'http://localhost:8000/register';
-// const body = {name: 'poopy', email: 'test@test.com', password: 'test'};
 const data = {name, email, password};
 const headers = {
 	'Content_Type': 'application/json;charset=UTF-8',
@@ -45,6 +44,7 @@ const submit = () => {
 	return (
 		<div className="container">
 			<h1>Register</h1>
+			
 				<div className="form-group row">
 					<label for="inputPassword3" className="col-sm-2 col-form-label" >Username</label>
 					<div className="col-sm-10">

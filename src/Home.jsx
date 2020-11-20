@@ -18,21 +18,21 @@ useEffect(axiosCall, [])
 
     // console.log(data);
     return (
-        <>
+        <div className="container">
             <h1>Home</h1>
             {/* <button onClick={axiosCall}></button> */}
             {/* <h2>{data[0].title}</h2> */}
             <div className="row">
                 {storyData.map((item, index) => {
                     return(
-                    <div className="col-4 border">
+                    <div key={index} className="col-4 border">
                         <h3>{item.title}</h3>
                     <p>{item.desc}</p>
                     </div>
                     )
                 })}
             </div>
-        </>
+        </div>
 
     )
 }
