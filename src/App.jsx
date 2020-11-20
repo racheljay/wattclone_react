@@ -1,41 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-import { render } from '@testing-library/react';
-import User from './User';
 import Nav from './Nav';
+import Home from './Home';
 import Signup from './Signup';
+import Login from './Login';
 
 function App() {
+  let pages = [
+    { readableName: 'Home', url: 'home' },
+    { readableName: 'Register', url: 'register' },
+    { readableName: 'Login', url: 'login' },
+  ]
+
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // component did update
+  const setPage = (newPageNum) => {
+    console.log(newPageNum)
+    setCurrentPage(newPageNum)
+    window.localStorage.setItem('currentPage', JSON.stringify(newPageNum))
+  }
+
+    //component did mount
+    useEffect(() => {
+      console.log('did mount')
+      let lsPage = window.localStorage.getItem('currentPage')
+      if(lsPage) {
+        if (lsPage !== currentPage) {
+          setCurrentPage(JSON.parse(lsPage))
+        }
+      }
+      
+      console.log(currentPage)
+    }, [])
 
 
-  
+
+
   return (
     <div className="App">
-      <Nav />
-      <Signup />
       <Router>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+        <Nav
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setPage={setPage}
+        />
+        <Switch>
 
-          {/* this link bit is specific to react router */}
-          <Link to={`/user`}>Link Content</Link>
-          {/* this makes it so that we can go to a new page without refreshing
-          it maintains the state */}
+          <Route exact path="/">
+            <Home />
+          </Route>
 
-          <Switch>
-            <Route path="/">
-              <SimpleComponent />
-            </Route>
+          <Route path="/register">
+            <Signup />
+          </Route>
 
-            <Route path="/user">
-              <User/>
-            </Route>
-          </Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+
+        </Switch>
 
 
-        </header>
       </Router>
     </div>
   );
